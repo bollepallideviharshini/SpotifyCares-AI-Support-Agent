@@ -643,7 +643,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <textarea id="tweetInput" class="tweet-textarea" placeholder="Type a customer support tweet (e.g. @SpotifyCares my songs keep pausing...)"></textarea>
             <div class="input-footer">
                 <div class="char-counter" id="charCounter">0 / 280 characters</div>
-                <button class="btn-submit" onclick="runAnalysis()">
+                <button id="submitBtn" class="btn-submit" onclick="runAnalysis()">
                     ⚡ Analyze & Generate Reply
                 </button>
             </div>
@@ -738,16 +738,103 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <script>
         const tweetInput = document.getElementById('tweetInput');
         const charCounter = document.getElementById('charCounter');
+        const submitBtn = document.getElementById('submitBtn');
 
-        tweetInput.addEventListener('input', () => {
-            charCounter.textContent = `${tweetInput.value.length} / 280 characters`;
-        });
+        if (tweetInput) {
+            tweetInput.addEventListener('input', () => {
+                charCounter.textContent = `${tweetInput.value.length} / 280 characters`;
+            });
+            tweetInput.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    runAnalysis();
+                }
+            });
+        }
+
+        function runAnalysis() {
+            const text = tweetInput ? tweetInput.value.trim() : '';
+            if(!text) return;
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '⚡ Analyzing...';
+            }
+
+            fetch('/api/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: text })
+            })
+            .then(res => {
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.json();
+            })
+            .then(data => {
+                // Panel 1: Intent
+                document.getElementById('intentBadge').textContent = data.intent;
+                document.getElementById('confidenceVal').textContent = `${data.intent_confidence}%`;
+                
+                const scoresList = document.getElementById('scoresList');
+                scoresList.innerHTML = '';
+                if (data.all_scores) {
+                    data.all_scores.forEach(s => {
+                        const row = document.createElement('div');
+                        row.className = 'score-row';
+                        row.innerHTML = `
+                            <span style="width: 140px; color: var(--text-secondary); font-family: monospace;">${s.intent}</span>
+                            <div class="score-bar-bg"><div class="score-bar-fill" style="width: ${s.score}%"></div></div>
+                            <span style="font-weight: 600; width: 40px; text-align: right;">${s.score}%</span>
+                        `;
+                        scoresList.appendChild(row);
+                    });
+                }
+
+                // Panel 2: Escalation
+                const actionBanner = document.getElementById('actionBanner');
+                const actionIcon = document.getElementById('actionIcon');
+                const actionText = document.getElementById('actionText');
+                const reasonBox = document.getElementById('reasonBox');
+
+                const actionStr = String(data.action).toLowerCase();
+                const isEscalate = actionStr.includes('escalat');
+
+                if (isEscalate) {
+                    actionBanner.className = 'action-banner escalate';
+                    actionIcon.textContent = '⚠️';
+                    actionText.textContent = 'ESCALATE TO HUMAN AGENT';
+                } else {
+                    actionBanner.className = 'action-banner auto';
+                    actionIcon.textContent = '✓';
+                    actionText.textContent = 'AUTOMATED REPLY APPROVED';
+                }
+                reasonBox.textContent = data.reason;
+
+                // Panel 3: Reply
+                document.getElementById('replyBox').textContent = data.draft_reply;
+
+                // Panel 4: Retrieved Context
+                document.getElementById('retrievalScore').textContent = `Score: ${data.retrieval_score}%`;
+                document.getElementById('retrievedCustomer').textContent = data.retrieved_example ? data.retrieved_example.example_tweet : '--';
+                document.getElementById('retrievedBrand').textContent = data.retrieved_example ? data.retrieved_example.spotify_reply : '--';
+            })
+            .catch(err => {
+                console.error('Error analyzing tweet:', err);
+                alert('Analysis failed. Please try again.');
+            })
+            .finally(() => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '⚡ Analyze & Generate Reply';
+                }
+            });
+        }
 
         // Fetch demo tweets
         fetch('/api/demo-tweets')
             .then(res => res.json())
             .then(tweets => {
                 const bar = document.getElementById('presetBar');
+                if (!bar) return;
                 tweets.forEach(t => {
                     const btn = document.createElement('button');
                     btn.className = 'preset-btn';
@@ -765,62 +852,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                     charCounter.textContent = `${tweets[0].text.length} / 280 characters`;
                     runAnalysis();
                 }
-            });
-
-        function runAnalysis() {
-            const text = tweetInput.value.trim();
-            if(!text) return;
-
-            fetch('/api/analyze', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: text })
             })
-            .then(res => res.json())
-            .then(data => {
-                // Panel 1: Intent
-                document.getElementById('intentBadge').textContent = data.intent;
-                document.getElementById('confidenceVal').textContent = `${data.intent_confidence}%`;
-                
-                const scoresList = document.getElementById('scoresList');
-                scoresList.innerHTML = '';
-                data.all_scores.forEach(s => {
-                    const row = document.createElement('div');
-                    row.className = 'score-row';
-                    row.innerHTML = `
-                        <span style="width: 140px; color: var(--text-secondary); font-family: monospace;">${s.intent}</span>
-                        <div class="score-bar-bg"><div class="score-bar-fill" style="width: ${s.score}%"></div></div>
-                        <span style="font-weight: 600; width: 40px; text-align: right;">${s.score}%</span>
-                    `;
-                    scoresList.appendChild(row);
-                });
-
-                // Panel 2: Escalation
-                const actionBanner = document.getElementById('actionBanner');
-                const actionIcon = document.getElementById('actionIcon');
-                const actionText = document.getElementById('actionText');
-                const reasonBox = document.getElementById('reasonBox');
-
-                if (data.action === 'ESCALATE_HUMAN') {
-                    actionBanner.className = 'action-banner escalate';
-                    actionIcon.textContent = '⚠️';
-                    actionText.textContent = 'ESCALATE_HUMAN';
-                } else {
-                    actionBanner.className = 'action-banner auto';
-                    actionIcon.textContent = '✓';
-                    actionText.textContent = 'AUTOMATED_REPLY';
-                }
-                reasonBox.textContent = data.reason;
-
-                // Panel 3: Reply
-                document.getElementById('replyBox').textContent = data.draft_reply;
-
-                // Panel 4: Retrieved Context
-                document.getElementById('retrievalScore').textContent = `Score: ${data.retrieval_score}%`;
-                document.getElementById('retrievedCustomer').textContent = data.retrieved_example.example_tweet;
-                document.getElementById('retrievedBrand').textContent = data.retrieved_example.spotify_reply;
-            });
-        }
+            .catch(err => console.error('Failed to load demo tweets:', err));
     </script>
 </body>
 </html>
