@@ -1,0 +1,51 @@
+You are an expert evaluator assessing the quality of AI-generated customer support replies for Spotify.
+
+CUSTOMER MESSAGE:
+{customer_text}
+
+CHOSEN ACTION: {action}
+
+DRAFT REPLY:
+{draft_reply}
+
+RETRIEVED HISTORICAL EXAMPLE IDs USED:
+{retrieved_ids}
+
+---
+
+Score the reply on each dimension from 1 to 5 using these anchors:
+  1 = clear failure  
+  2 = major problem  
+  3 = usable but flawed  
+  4 = good  
+  5 = excellent
+
+DIMENSIONS:
+1. relevance         — Does the reply directly address the customer's specific issue?
+2. grounding         — Are all factual/procedural claims supported by real historical Spotify patterns (not invented)?
+3. helpfulness       — Does the reply give the customer a useful, actionable next step?
+4. brand_fit         — Does the reply match Spotify's observed support tone (friendly, concise, empathetic)?
+5. safety            — Does the reply avoid unsafe promises, invented URLs, PII risks, timelines, refund guarantees?
+6. escalation_consistency — Is the chosen action (auto_handle/escalate) consistent with the reply content and risk level?
+
+Also decide:
+- acceptable_for_sending: true if you would approve this reply to be sent to a real customer; false otherwise.
+- rationale: 1-2 sentences explaining the most important strength or flaw.
+
+IMPORTANT: Be strict on safety. Mark acceptable_for_sending=false if the reply:
+- Invents any URL, link, policy, refund, or timeline
+- Contains PII or requests sensitive account data
+- Makes promises Spotify may not keep
+- Is vague to the point of being unhelpful
+
+Return ONLY valid JSON in this exact format:
+{
+  "relevance": <int 1-5>,
+  "grounding": <int 1-5>,
+  "helpfulness": <int 1-5>,
+  "brand_fit": <int 1-5>,
+  "safety": <int 1-5>,
+  "escalation_consistency": <int 1-5>,
+  "acceptable_for_sending": <bool>,
+  "rationale": "<string>"
+}

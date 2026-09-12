@@ -1,0 +1,101 @@
+# ─── Reproducibility ──────────────────────────────────────────────────────────
+seed: 42
+
+# ─── Data ─────────────────────────────────────────────────────────────────────
+data:
+  raw_path: "data/twcs.csv"                   # Full Kaggle CSV (not committed)
+  sample_path: "data/sample_threads.jsonl"    # Committed ~5k-thread subset
+  threads_path: "data/threads_processed.jsonl"
+  golden_set_path: "data/golden_set.csv"
+  brand: "SpotifyCares"
+  max_threads: 5000
+  min_thread_quality: 1                        # Min brand turns in thread
+  train_cutoff_date: "2017-09-01"              # Chronological split
+  test_start_date: "2017-09-01"
+
+# ─── Intent Classifier ────────────────────────────────────────────────────────
+intent:
+  num_classes: 10
+  taxonomy_path: "configs/intent_taxonomy.yaml"
+  tfidf:
+    word_ngram_range: [1, 2]
+    char_ngram_range: [2, 4]
+    max_features: 30000
+    sublinear_tf: true
+  embedding:
+    model_name: "all-MiniLM-L6-v2"
+    cache_path: "artifacts/embeddings_cache.npy"
+    labels_path: "artifacts/labels_cache.npy"
+    ids_path: "artifacts/ids_cache.npy"
+  logistic_regression:
+    C: 1.0
+    max_iter: 1000
+    class_weight: "balanced"
+    calibration_method: "isotonic"             # or 'sigmoid'
+  knn:
+    k: 7
+    metric: "cosine"
+
+# ─── Retrieval ────────────────────────────────────────────────────────────────
+retrieval:
+  top_k: 3
+  bm25_weight: 0.4
+  dense_weight: 0.6
+  intent_match_bonus: 0.1
+  min_retrieval_score: 0.3                     # Below this → escalate
+  faiss_index_path: "artifacts/faiss_index.bin"
+  thread_store_path: "artifacts/thread_store.jsonl"
+  embedding_model: "all-MiniLM-L6-v2"
+
+# ─── Reply Generation ─────────────────────────────────────────────────────────
+generation:
+  llm_provider: "openai"                       # openai | anthropic | gemini
+  model: "gpt-4o-mini"
+  temperature: 0.3
+  max_tokens: 200
+  frozen_replies_path: "artifacts/predictions.jsonl"
+  prompt_path: "prompts/reply_prompt.txt"
+
+# ─── Escalation Policy ────────────────────────────────────────────────────────
+escalation:
+  min_intent_confidence: 0.55
+  min_retrieval_score: 0.30
+  high_risk_intents:
+    - payment_charge
+    - account_security
+  pii_patterns:
+    - "\\b[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Z|a-z]{2,}\\b"   # email
+    - "\\b\\d{3}[-.]?\\d{3}[-.]?\\d{4}\\b"                              # phone
+    - "\\b(?:\\d[ -]*?){13,16}\\b"                                       # credit card
+  safety_keywords:
+    - "sue"
+    - "lawyer"
+    - "legal action"
+    - "court"
+    - "kill"
+    - "die"
+    - "hurt myself"
+    - "suicide"
+    - "threat"
+    - "bomb"
+    - "hack"
+    - "stolen"
+    - "compromised"
+  forbidden_reply_phrases:
+    - "I guarantee"
+    - "your refund will"
+    - "I promise"
+    - "http"
+    - "www."                            # no invented links
+
+# ─── Evaluation ───────────────────────────────────────────────────────────────
+evaluation:
+  judge_model: "gpt-4o-mini"
+  judge_prompt_path: "prompts/judge_prompt.txt"
+  judge_sample_size: 75                        # Replies sent to LLM judge
+  human_sample_size: 50                        # Subset for human agreement
+  confidence_thresholds: [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+  metrics_output: "artifacts/metrics.json"
+  confusion_matrix_output: "artifacts/confusion_matrix.png"
+  risk_coverage_output: "artifacts/risk_coverage.png"
+  calibration_output: "artifacts/calibration.png"

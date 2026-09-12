@@ -1,0 +1,194 @@
+---
+# SpotifyCares Intent Taxonomy
+# Derived from exploratory clustering on ~5k SpotifyCares tweets.
+# Frozen before golden-set annotation.
+# Each intent has: description, inclusion, exclusion, examples, boundary example.
+
+intents:
+
+  playback_issue:
+    label: "playback_issue"
+    description: "Songs, podcasts, or audio fail to play, pause unexpectedly, skip, buffer, or produce no sound."
+    inclusion:
+      - Song stops mid-play or loops
+      - Audio cuts out, no sound from app
+      - Shuffle or skip not working
+      - Buffering / loading endlessly
+      - Offline downloads won't play
+    exclusion:
+      - App crashes entirely → app_bug_crash
+      - Song not available in user's region → content_availability
+      - Bluetooth or device pairing issues (classify as feature_question unless clearly a bug)
+    examples:
+      - "why does spotify keep pausing every 30 seconds it's driving me crazy"
+      - "the songs just won't play they just spin and spin @SpotifyCares"
+    boundary:
+      text: "my bluetooth speaker isn't working with spotify"
+      note: "Could be playback_issue (audio output) or feature_question (device setup). Use feature_question if the user asks how to connect; use playback_issue if they say audio stops or cuts out."
+
+  login_account_access:
+    label: "login_account_access"
+    description: "User cannot sign in, is logged out repeatedly, cannot reset password, or lost access to their account."
+    inclusion:
+      - Cannot log in / incorrect password message
+      - Repeated logouts / session expiry
+      - Password reset email not arriving
+      - Two-factor authentication issues
+      - Account locked or disabled
+    exclusion:
+      - Unauthorized third-party access → account_security
+      - Subscription-level access question → subscription_cancellation
+    examples:
+      - "i keep getting logged out of spotify every single day wtf @SpotifyCares"
+      - "@SpotifyCares i can't login it says wrong password but i just reset it"
+    boundary:
+      text: "i tried to login but it says my account doesn't exist"
+      note: "Could be login_account_access (wrong credentials) or account_security (if the user suspects deletion or hacking). Default to login_account_access unless security language is present."
+
+  subscription_cancellation:
+    label: "subscription_cancellation"
+    description: "Questions or issues about Premium status, plan changes, cancellation, family/student plan eligibility, or subscription renewal."
+    inclusion:
+      - User wants to cancel Premium
+      - Premium not activating after payment
+      - Plan upgrade/downgrade questions
+      - Family or student plan questions
+      - Subscription auto-renewed unexpectedly
+    exclusion:
+      - Unexpected charge with no subscription context → payment_charge
+      - Free tier feature question → feature_question
+    examples:
+      - "@SpotifyCares how do I cancel my premium subscription?"
+      - "my premium just renewed but I thought I cancelled it last month"
+    boundary:
+      text: "I'm being charged even though I downgraded to free"
+      note: "Borderline subscription_cancellation / payment_charge. Use subscription_cancellation if the user's main concern is plan status; use payment_charge if the main concern is the unexpected debit."
+
+  payment_charge:
+    label: "payment_charge"
+    description: "User sees an unexpected, duplicate, or erroneous charge; payment fails; refund requested."
+    inclusion:
+      - Unexpected or duplicate charge on bank/card
+      - Payment failed or declined
+      - Requesting a refund
+      - Gift card or voucher redemption issue
+    exclusion:
+      - Subscription auto-renewal without unexpected charge → subscription_cancellation
+    examples:
+      - "@SpotifyCares you charged me twice this month wtf"
+      - "my payment keeps failing and i can't get premium @SpotifyCares"
+    boundary:
+      text: "charged £9.99 but I'm on the free plan"
+      note: "Use payment_charge — there's an actual unexpected charge, not merely a subscription question."
+
+  app_bug_crash:
+    label: "app_bug_crash"
+    description: "The Spotify app freezes, crashes, fails to open, or shows visual/functional glitches."
+    inclusion:
+      - App crashes on launch or during use
+      - App freezes and becomes unresponsive
+      - UI glitch or rendering error
+      - Update broke functionality
+    exclusion:
+      - Audio doesn't play but app stays open → playback_issue
+      - User asking how a feature works → feature_question
+    examples:
+      - "@SpotifyCares your app keeps crashing on my iphone since the last update"
+      - "spotify won't even open anymore, just a black screen @SpotifyCares"
+    boundary:
+      text: "the app opened but now I can't tap anything"
+      note: "App is open but frozen → app_bug_crash."
+
+  feature_question:
+    label: "feature_question"
+    description: "User asks how to use a feature, configure settings, or requests a feature that may or may not exist."
+    inclusion:
+      - How to download music for offline
+      - How to share a playlist
+      - How to connect to a device (Chromecast, speaker)
+      - Crossfade, equalizer, data-saver settings
+      - Feature suggestion or request
+    exclusion:
+      - Feature is broken / not working → playback_issue or app_bug_crash
+    examples:
+      - "@SpotifyCares how do I download music to listen offline?"
+      - "is there a way to see what songs I've liked recently on spotify?"
+    boundary:
+      text: "how do I use spotify on my tv? I connected it but it won't show"
+      note: "If asking how to set up → feature_question. If it WAS set up and now broken → app_bug_crash."
+
+  content_availability:
+    label: "content_availability"
+    description: "A song, album, podcast, or artist is missing, unavailable in the user's region, or has been removed."
+    inclusion:
+      - Song grayed out or unavailable
+      - Album missing from Spotify
+      - Podcast removed or not found
+      - Regional restriction
+      - Artist removed from platform
+    exclusion:
+      - Downloaded content won't play → playback_issue
+    examples:
+      - "@SpotifyCares why is this album not on spotify anymore?"
+      - "why are half the songs on this playlist grayed out? @SpotifyCares"
+    boundary:
+      text: "I can't find [artist] on spotify"
+      note: "Could be content_availability (artist removed) or feature_question (user doesn't know how to search). If user implies the artist was there before or should be → content_availability."
+
+  account_security:
+    label: "account_security"
+    description: "User's account has been hacked, accessed by a third party, or they suspect unauthorized activity."
+    inclusion:
+      - Unknown devices logged in
+      - Music playing on account without user's control
+      - Password changed by someone else
+      - Phishing or scam related to Spotify account
+    exclusion:
+      - Cannot log in but no security concern → login_account_access
+    examples:
+      - "@SpotifyCares someone hacked my spotify account and changed my email"
+      - "there are devices logged into my account that I don't recognize @SpotifyCares"
+    boundary:
+      text: "I was logged out of spotify and now I can't get back in"
+      note: "No security signals → login_account_access. If user mentions someone else changed their password → account_security."
+
+  service_outage:
+    label: "service_outage"
+    description: "User reports that Spotify is down for many people at once, or references a widespread failure."
+    inclusion:
+      - Is Spotify down right now?
+      - Many users reporting the same issue simultaneously
+      - References to status page or downdetector
+    exclusion:
+      - Single-user playback or login issue → other intents
+    examples:
+      - "@SpotifyCares is spotify down? everyone i know can't log in"
+      - "spotify seems to be having major outage, anyone else? @SpotifyCares"
+    boundary:
+      text: "spotify isn't working for me today"
+      note: "No evidence of widespread failure → playback_issue or login_account_access."
+
+  other_unclear:
+    label: "other_unclear"
+    description: "Message lacks sufficient context, is spam, or does not fit any defined intent. Treat as a real class, not a catch-all."
+    inclusion:
+      - Vague praise or complaint with no actionable detail
+      - Pure sarcasm or humor without a support need
+      - Off-topic message (weather, memes)
+      - Message is too short to classify confidently
+    exclusion:
+      - Any message with a discernible support need → appropriate intent
+    examples:
+      - "@SpotifyCares lol"
+      - "spotify is just the worst app ever made thanks"
+    boundary:
+      text: "I have a problem with my account"
+      note: "Vague but does express a support need. Classify as other_unclear and escalate for human follow-up since no specific intent can be determined."
+
+# ─── Tie-breaking rules ────────────────────────────────────────────────────────
+tie_breaking:
+  - "If payment AND subscription signals co-exist, use payment_charge if a charge amount is mentioned; else subscription_cancellation."
+  - "If login AND security signals co-exist, use account_security if the user mentions someone else or unauthorized access."
+  - "If playback AND app_bug signals co-exist, use app_bug_crash if the app itself is non-functional; else playback_issue."
+  - "When ambiguous, prefer the more specific (narrower) intent over other_unclear."
+  - "Use secondary_intent in golden set to record the runner-up when two intents are nearly equally present."

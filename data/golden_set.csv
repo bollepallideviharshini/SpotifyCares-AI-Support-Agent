@@ -1,0 +1,201 @@
+tweet_id,conversation_id,text,intent,secondary_intent,reply_reference,should_escalate,escalation_reason,risk_tags,ambiguity,split,annotator,notes
+g001,c001,"@SpotifyCares my songs keep pausing every 30 seconds its so annoying",playback_issue,,r001,False,,playback,1,test,primary,Clear playback issue
+g002,c002,"@SpotifyCares why does spotify keep skipping songs? happens on shuffle too",playback_issue,,r002,False,,playback,1,test,primary,Clear skip/playback
+g003,c003,"@SpotifyCares downloaded playlist won't play offline even though i downloaded it",playback_issue,feature_question,r003,False,,playback offline,2,test,primary,Offline download not working
+g004,c004,"@SpotifyCares no sound coming from spotify at all. other apps work fine",playback_issue,,r004,False,,audio,1,test,primary,Clear audio issue
+g005,c005,"@SpotifyCares crossfade not working after the update",playback_issue,app_bug_crash,r005,False,,playback feature,2,test,primary,Could be bug or playback
+g006,c006,"@SpotifyCares i cant log into my account keep saying wrong password but i just changed it",login_account_access,,r006,False,,login,1,test,primary,Classic login issue
+g007,c007,"@SpotifyCares locked out of my account help please",login_account_access,,r007,False,,login,1,test,primary,
+g008,c008,"@SpotifyCares the password reset email never arrives checked spam too",login_account_access,,r008,False,,login,1,test,primary,
+g009,c009,"@SpotifyCares keeps logging me out every day i have to login again and again",login_account_access,,r009,False,,login session,1,test,primary,Repeated logout
+g010,c010,"@SpotifyCares cant get the verification code for 2 factor login",login_account_access,,r010,False,,login 2fa,1,test,primary,
+g011,c011,"@SpotifyCares how do i cancel my premium subscription",subscription_cancellation,,r011,False,,billing,1,test,primary,Clear cancellation request
+g012,c012,"@SpotifyCares i cancelled last month but still being charged",subscription_cancellation,payment_charge,r012,True,billing dispute after cancellation,billing,2,test,primary,Overlaps payment
+g013,c013,"@SpotifyCares my premium isnt active even though i just paid",subscription_cancellation,payment_charge,r013,True,account and payment verification required,billing,2,test,primary,Could need manual fix
+g014,c014,"@SpotifyCares can i share my premium with my family how does family plan work",subscription_cancellation,feature_question,r014,False,,billing plan,2,test,primary,Plan question
+g015,c015,"@SpotifyCares student discount expired can i reapply",subscription_cancellation,,r015,False,,billing student,1,test,primary,
+g016,c016,"@SpotifyCares you charged me twice this month what is going on",payment_charge,,r016,True,duplicate charge requires account verification,billing payment,1,test,primary,Clear double charge
+g017,c017,"@SpotifyCares my payment keeps failing i cant get premium",payment_charge,,r017,False,,payment,1,test,primary,Payment failure
+g018,c018,"@SpotifyCares i was charged 9.99 but im on the free plan",payment_charge,,r018,True,unexpected charge - human verification required,billing payment,1,test,primary,
+g019,c019,"@SpotifyCares gift card code not working says already redeemed",payment_charge,,r019,False,,payment voucher,1,test,primary,
+g020,c020,"@SpotifyCares refund please you charged me for a plan i didnt want",payment_charge,,r020,True,refund request requires account verification,billing refund,1,test,primary,Refund = escalate
+g021,c021,"@SpotifyCares the app keeps crashing every time i open it on iphone 14",app_bug_crash,,r021,False,,crash ios,1,test,primary,
+g022,c022,"@SpotifyCares spotify wont even open anymore just a black screen",app_bug_crash,,r022,False,,crash,1,test,primary,
+g023,c023,"@SpotifyCares app froze and now i cant tap anything",app_bug_crash,,r023,False,,freeze,1,test,primary,
+g024,c024,"@SpotifyCares latest update broke everything notifications are gone",app_bug_crash,,r024,False,,bug update,1,test,primary,
+g025,c025,"@SpotifyCares home screen keeps reloading endlessly",app_bug_crash,,r025,False,,bug ui,1,test,primary,
+g026,c026,"@SpotifyCares how do i download music to listen offline",feature_question,,r026,False,,feature offline,1,test,primary,
+g027,c027,"@SpotifyCares is there a way to see my listening history",feature_question,,r027,False,,feature history,1,test,primary,
+g028,c028,"@SpotifyCares how do i connect spotify to my alexa",feature_question,,r028,False,,feature device,1,test,primary,
+g029,c029,"@SpotifyCares can you make spotify work with apple carplay",feature_question,,r029,False,,feature carplay,1,test,primary,
+g030,c030,"@SpotifyCares how do i enable crossfade between songs",feature_question,,r030,False,,feature crossfade,1,test,primary,
+g031,c031,"@SpotifyCares why is this album not on spotify anymore",content_availability,,r031,False,,content missing,1,test,primary,
+g032,c032,"@SpotifyCares half the songs on this playlist are grayed out",content_availability,,r032,False,,content grayed,1,test,primary,
+g033,c033,"@SpotifyCares cant find this artist on spotify did they get removed",content_availability,,r033,False,,content artist,1,test,primary,
+g034,c034,"@SpotifyCares this podcast episode disappeared from my library",content_availability,,r034,False,,content podcast,1,test,primary,
+g035,c035,"@SpotifyCares song available in us but not in india why",content_availability,,r035,False,,content region,1,test,primary,Regional restriction
+g036,c036,"@SpotifyCares someone hacked my spotify account and changed my email",account_security,,r036,True,account compromise - urgent human intervention required,security hacked,1,test,primary,
+g037,c037,"@SpotifyCares there are devices logged into my account that i dont recognize",account_security,,r037,True,unauthorized access - security escalation required,security unauthorized,1,test,primary,
+g038,c038,"@SpotifyCares my password was changed by someone else i cant get in",account_security,,r038,True,account takeover - immediate human review,security hacked,1,test,primary,
+g039,c039,"@SpotifyCares i got a phishing email pretending to be spotify",account_security,,r039,True,phishing report - security team needed,security phishing,1,test,primary,
+g040,c040,"@SpotifyCares my spotify is playing music by itself on some other device",account_security,,r040,True,possible unauthorized access,security,2,test,primary,
+g041,c041,"@SpotifyCares is spotify down right now? everyone i know cant connect",service_outage,,r041,False,,outage,1,test,primary,
+g042,c042,"@SpotifyCares spotify seems to be having a major outage anyone else",service_outage,,r042,False,,outage,1,test,primary,
+g043,c043,"@SpotifyCares is there a known issue today app is broken for all my friends",service_outage,,r043,False,,outage widespread,1,test,primary,
+g044,c044,"@SpotifyCares downdetector shows tons of reports right now whats going on",service_outage,,r044,False,,outage,1,test,primary,
+g045,c045,"@SpotifyCares status page shows all green but nothing works for me or my friends",service_outage,,r045,False,,outage status,2,test,primary,
+g046,c046,"@SpotifyCares lol",other_unclear,,r046,True,message too vague - needs human clarification,vague,1,test,primary,No actionable content
+g047,c047,"@SpotifyCares spotify is the worst app ever made",other_unclear,,r047,False,,vague complaint,1,test,primary,Vague complaint no specific issue
+g048,c048,"@SpotifyCares i have a problem with my account",other_unclear,,r048,True,too vague to classify - needs more info,vague,3,test,primary,Could be anything - escalate
+g049,c049,"@SpotifyCares please help me",other_unclear,,r049,True,no actionable information,vague,3,test,primary,
+g050,c050,"@SpotifyCares fix your app",other_unclear,,r050,True,insufficient context for auto-handle,vague,2,test,primary,
+g051,c051,"@SpotifyCares songs stop playing when i get a call on android",playback_issue,,r051,False,,playback android,1,test,primary,
+g052,c052,"@SpotifyCares the volume keeps changing on its own",playback_issue,,r052,False,,playback volume,1,test,primary,
+g053,c053,"@SpotifyCares premium songs reverting to 30 second previews",playback_issue,subscription_cancellation,r053,True,may indicate subscription issue,playback billing,2,test,primary,Billing overlap
+g054,c054,"@SpotifyCares bluetooth headphones disconnect from spotify specifically",playback_issue,,r054,False,,playback bluetooth,2,test,primary,
+g055,c055,"@SpotifyCares spotify cuts out every time someone sends me a message",playback_issue,,r055,False,,playback interruption,1,test,primary,
+g056,c056,"@SpotifyCares forgot my spotify password and email was deleted",login_account_access,,r056,True,account recovery without email access needs human help,login recovery,2,test,primary,Complex recovery
+g057,c057,"@SpotifyCares trying to login with facebook but getting an error",login_account_access,,r057,False,,login social,1,test,primary,
+g058,c058,"@SpotifyCares got a new phone and cant remember my spotify password",login_account_access,,r058,False,,login device,1,test,primary,
+g059,c059,"@SpotifyCares two factor is not sending to my new number",login_account_access,,r059,True,2FA to changed number may need account verification,login 2fa,2,test,primary,
+g060,c060,"@SpotifyCares my account says its from a different country and wont let me in",login_account_access,,r060,True,regional account issue needs human review,login region,2,test,primary,
+g061,c061,"@SpotifyCares my annual plan auto-renewed without warning can i get a refund",payment_charge,subscription_cancellation,r061,True,refund request - needs account verification,billing refund,2,test,primary,
+g062,c062,"@SpotifyCares apple charged me for spotify not spotify directly is this right",payment_charge,,r062,True,third-party billing question,billing apple,2,test,primary,
+g063,c063,"@SpotifyCares tried to upgrade to premium but card was declined",payment_charge,,r063,False,,payment decline,1,test,primary,
+g064,c064,"@SpotifyCares promo code for 3 months free not working",payment_charge,,r064,False,,payment promo,1,test,primary,
+g065,c065,"@SpotifyCares bank shows pending spotify charge but no premium on account",payment_charge,,r065,True,pending charge + no account change - verify manually,billing payment,2,test,primary,
+g066,c066,"@SpotifyCares app crashes specifically when i try to search",app_bug_crash,,r066,False,,crash search,1,test,primary,
+g067,c067,"@SpotifyCares screen goes white and freezes after updating to latest version",app_bug_crash,,r067,False,,crash update,1,test,primary,
+g068,c068,"@SpotifyCares widgets stopped working on iphone after ios update",app_bug_crash,,r068,False,,bug widget ios,1,test,primary,
+g069,c069,"@SpotifyCares dark mode is broken everything is white",app_bug_crash,,r069,False,,bug ui,1,test,primary,
+g070,c070,"@SpotifyCares playlist keeps disappearing from my home screen",app_bug_crash,feature_question,r070,False,,bug ui,2,test,primary,
+g071,c071,"@SpotifyCares can i make spotify louder than my volume max allows",feature_question,,r071,False,,feature volume,1,test,primary,
+g072,c072,"@SpotifyCares how do i see the lyrics for a song",feature_question,,r072,False,,feature lyrics,1,test,primary,
+g073,c073,"@SpotifyCares is there a way to block explicit songs",feature_question,,r073,False,,feature explicit,1,test,primary,
+g074,c074,"@SpotifyCares how do i transfer my playlists from apple music to spotify",feature_question,,r074,False,,feature migration,1,test,primary,
+g075,c075,"@SpotifyCares does spotify have a sleep timer feature",feature_question,,r075,False,,feature sleep,1,test,primary,
+g076,c076,"@SpotifyCares why cant i find any drake songs on spotify",content_availability,,r076,False,,content artist,1,test,primary,
+g077,c077,"@SpotifyCares this playlist had 50 songs now it only shows 20 where did they go",content_availability,,r077,False,,content missing,2,test,primary,
+g078,c078,"@SpotifyCares i cant access my wrapped what happened to it",content_availability,,r078,False,,content feature,1,test,primary,
+g079,c079,"@SpotifyCares why are audiobooks not available in my country",content_availability,,r079,False,,content region,1,test,primary,
+g080,c080,"@SpotifyCares the joe rogan podcast isnt showing all episodes",content_availability,,r080,False,,content podcast,1,test,primary,
+g081,c081,"@SpotifyCares i think my account was sold on the dark web my password changed",account_security,,r081,True,account compromise - urgent,security hacked,1,test,primary,
+g082,c082,"@SpotifyCares i keep getting emails saying my password was changed i didnt do this",account_security,,r082,True,account compromise - urgent,security hacked,1,test,primary,
+g083,c083,"@SpotifyCares someone is using my family plan without my permission",account_security,,r083,True,unauthorized use - needs account access review,security unauthorized,2,test,primary,
+g084,c084,"@SpotifyCares got charged by spotify but my account still shows free",payment_charge,,r084,True,charge without service activation - escalate,billing payment,2,test,primary,
+g085,c085,"@SpotifyCares ive been waiting 3 weeks for a refund",payment_charge,,r085,True,delayed refund - needs human follow-up,billing refund,1,test,primary,
+g086,c086,"@SpotifyCares are you guys having problems today my app wont load",service_outage,app_bug_crash,r086,False,,outage app,2,test,primary,Could be personal or outage
+g087,c087,"@SpotifyCares my whole office cant play spotify today",service_outage,,r087,False,,outage widespread,1,test,primary,Multiple users = outage signal
+g088,c088,"@SpotifyCares is there a scheduled maintenance today?",service_outage,,r088,False,,outage maintenance,1,test,primary,
+g089,c089,"@SpotifyCares what is happening to spotify everything is slow",service_outage,app_bug_crash,r089,False,,outage performance,2,test,primary,
+g090,c090,"@SpotifyCares spotify keeps buffering since this morning is this a known issue",service_outage,playback_issue,r090,False,,outage playback,2,test,primary,
+g091,c091,"@SpotifyCares songs pausing AND my login keeps failing - two problems",playback_issue,login_account_access,r091,True,multi-intent - needs triage,multi-intent,3,test,primary,Explicit multi-intent
+g092,c092,"@SpotifyCares charged twice AND the app keeps crashing what is going on",payment_charge,app_bug_crash,r092,True,multi-intent payment escalation required,multi-intent billing,3,test,primary,Payment = escalate
+g093,c093,"@SpotifyCares cant login AND i think someone else is in my account",login_account_access,account_security,r093,True,security concern - immediate escalation,multi-intent security,2,test,primary,Security present = escalate
+g094,c094,"@SpotifyCares premium not working AND i see a charge i dont recognize",subscription_cancellation,payment_charge,r094,True,billing dispute - human required,multi-intent billing,2,test,primary,
+g095,c095,"@SpotifyCares app crash and missing content after update",app_bug_crash,content_availability,r095,False,,multi-intent bug,2,test,primary,Both plausibly from same update bug
+g096,c096,"@SpotifyCares i will sue you if this isnt fixed",other_unclear,,r096,True,legal threat - requires legal/safety escalation,safety legal,1,test,primary,Legal threat keyword
+g097,c097,"@SpotifyCares if you dont fix this i swear to god",other_unclear,,r097,True,threatening language,safety,2,test,primary,Implicit threat
+g098,c098,"@SpotifyCares my account email is john123@gmail.com help me reset",login_account_access,,r098,True,PII - email in public tweet,pii login,1,test,primary,PII = escalate
+g099,c099,"@SpotifyCares call me at 555-867-5309 to sort this out",other_unclear,,r099,True,PII - phone number in public tweet,pii,1,test,primary,PII = escalate always
+g100,c100,"@SpotifyCares my credit card ending in 4242 was charged",payment_charge,,r100,True,PII - card info in public tweet,pii payment,1,test,primary,PII + payment = escalate
+g101,c101,"@SpotifyCares still having the same problem",other_unclear,,r101,True,implicit context missing - cannot handle without prior thread,implicit context,3,test,primary,No standalone context
+g102,c102,"@SpotifyCares this STILL hasnt been fixed after your last reply",other_unclear,,r102,True,implicit context - refers to prior unresolved issue,implicit context,3,test,primary,
+g103,c103,"@SpotifyCares lmao broken again",other_unclear,,r103,True,too vague - sarcasm or frustration with no action item,implicit context vague,3,test,primary,
+g104,c104,"@SpotifyCares as i said before the songs still wont play",playback_issue,,r104,True,implicit context but playback signal present - borderline,implicit context playback,2,test,primary,Has intent signal despite context
+g105,c105,"@SpotifyCares nothing has changed since your last tweet",other_unclear,,r105,True,implicit context - no standalone meaning,implicit context,3,test,primary,
+g106,c106,"@SpotifyCares i love spotify but my songs keep stopping ruining my workout",playback_issue,,r106,False,,playback,1,test,primary,Clear intent despite sentiment
+g107,c107,"@SpotifyCares great app but the android version is so buggy it crashes constantly",app_bug_crash,,r107,False,,bug android,1,test,primary,
+g108,c108,"@SpotifyCares the shuffle is broken it keeps playing the same 5 songs",playback_issue,,r108,False,,playback shuffle,1,test,primary,
+g109,c109,"@SpotifyCares premium student expired and my uni email no longer works",subscription_cancellation,,r109,True,student plan verification requires human,billing student,2,test,primary,Needs verification
+g110,c110,"@SpotifyCares duo plan confusing me how does it work with my partner",subscription_cancellation,feature_question,r110,False,,billing plan feature,2,test,primary,Plan question
+g111,c111,"@SpotifyCares cant find the option to cancel anywhere in settings",subscription_cancellation,,r111,False,,billing cancel,1,test,primary,Feature/UX question
+g112,c112,"@SpotifyCares my kids profile disappeared from family plan",subscription_cancellation,app_bug_crash,r112,False,,billing family,2,test,primary,
+g113,c113,"@SpotifyCares can i upgrade to premium without a credit card using paypal",payment_charge,feature_question,r113,False,,payment method,1,test,primary,Payment method question
+g114,c114,"@SpotifyCares why cant i buy premium from inside the iphone app",payment_charge,feature_question,r114,False,,payment ios,1,test,primary,Apple IAP restriction explanation
+g115,c115,"@SpotifyCares songs skip after exactly 30 seconds even on premium",playback_issue,subscription_cancellation,r115,True,30-second skip often indicates free account serving ads - check subscription,playback billing,2,test,primary,
+g116,c116,"@SpotifyCares spotify connect not working between phone and tv",feature_question,,r116,False,,feature connect,1,test,primary,
+g117,c117,"@SpotifyCares how do i make a collaborative playlist",feature_question,,r117,False,,feature playlist,1,test,primary,
+g118,c118,"@SpotifyCares podcast not updating with new episodes",content_availability,,r118,False,,content podcast,1,test,primary,
+g119,c119,"@SpotifyCares i want to listen to a show thats only on spotify in usa but im in uk",content_availability,,r119,False,,content region,1,test,primary,
+g120,c120,"@SpotifyCares all my saved songs disappeared from my library",content_availability,app_bug_crash,r120,False,,content library,2,test,primary,
+g121,c121,"@SpotifyCares app worked yesterday now wont even load help",app_bug_crash,,r121,False,,crash,1,test,primary,
+g122,c122,"@SpotifyCares the search bar is completely blank when i tap it",app_bug_crash,,r122,False,,bug ui,1,test,primary,
+g123,c123,"@SpotifyCares notifications for new releases stopped working",app_bug_crash,,r123,False,,bug notifications,1,test,primary,
+g124,c124,"@SpotifyCares my playlist sort order resets every time i open it",app_bug_crash,,r124,False,,bug playlist,1,test,primary,
+g125,c125,"@SpotifyCares pictures in spotify are not loading for albums",app_bug_crash,,r125,False,,bug ui images,1,test,primary,
+g126,c126,"@SpotifyCares i think i got scammed by a fake spotify premium site",account_security,,r126,True,potential phishing/scam - security escalation,security scam,1,test,primary,
+g127,c127,"@SpotifyCares someone bought premium using my payment method without permission",account_security,payment_charge,r127,True,fraudulent charge + account breach - urgent,security payment fraud,1,test,primary,
+g128,c128,"@SpotifyCares how do i log out of all devices remotely",account_security,feature_question,r128,False,,security feature,2,test,primary,Security-adjacent but informational
+g129,c129,"@SpotifyCares should i be worried my account email is in a data breach",account_security,,r129,True,data breach concern - security team,security breach,2,test,primary,
+g130,c130,"@SpotifyCares my account was suspended with no explanation",account_security,,r130,True,account suspension - needs human review,security suspension,1,test,primary,
+g131,c131,"@SpotifyCares is spotify back up? i couldn't use it earlier",service_outage,,r131,False,,outage resolved,1,test,primary,Past outage check
+g132,c132,"@SpotifyCares your service has been down for 2 hours this is unacceptable",service_outage,,r132,False,,outage duration,1,test,primary,
+g133,c133,"@SpotifyCares any update on the outage? still cant connect",service_outage,,r133,False,,outage update,1,test,primary,
+g134,c134,"@SpotifyCares wont play and its not my internet - tested with speed test",playback_issue,service_outage,r134,False,,playback outage,2,test,primary,Borderline playback/outage
+g135,c135,"@SpotifyCares this isnt working right now can you check if its on your end",service_outage,playback_issue,r135,False,,outage playback,2,test,primary,
+g136,c136,"@SpotifyCares my subscription isnt working in a new country i just moved to",subscription_cancellation,content_availability,r136,True,geographic account change - needs human,billing region,2,test,primary,Country change = human
+g137,c137,"@SpotifyCares cancelled premium but still shows as premium subscriber",subscription_cancellation,,r137,True,system state mismatch - verify manually,billing,2,test,primary,
+g138,c138,"@SpotifyCares what happens to my downloaded songs if i cancel premium",subscription_cancellation,feature_question,r138,False,,billing feature,1,test,primary,Informational
+g139,c139,"@SpotifyCares tried to cancel but it keeps redirecting me in circles",subscription_cancellation,,r139,False,,billing cancel ux,1,test,primary,UX issue - can explain steps
+g140,c140,"@SpotifyCares i deleted my account by mistake how do i get it back",login_account_access,,r140,True,deleted account recovery needs human,login recovery,1,test,primary,
+g141,c141,"@SpotifyCares how do i use spotify on my ps5",feature_question,,r141,False,,feature gaming,1,test,primary,
+g142,c142,"@SpotifyCares can i have two accounts on the same device",feature_question,,r142,False,,feature accounts,1,test,primary,
+g143,c143,"@SpotifyCares how do i find the blend feature",feature_question,,r143,False,,feature blend,1,test,primary,
+g144,c144,"@SpotifyCares is there a way to download a whole album at once",feature_question,,r144,False,,feature download,1,test,primary,
+g145,c145,"@SpotifyCares how do i set up jam session with friends",feature_question,,r145,False,,feature jam,1,test,primary,
+g146,c146,"@SpotifyCares app works on wifi but not on mobile data",playback_issue,,r146,False,,playback network,2,test,primary,Network-specific issue
+g147,c147,"@SpotifyCares songs from 2010s are missing but recent ones are there",content_availability,,r147,False,,content historical,2,test,primary,
+g148,c148,"@SpotifyCares i can play songs but cant see album art anywhere",app_bug_crash,,r148,False,,bug art ui,1,test,primary,
+g149,c149,"@SpotifyCares charged £9.99 for something i never signed up for",payment_charge,,r149,True,unexpected charge - escalate for verification,billing fraud,1,test,primary,
+g150,c150,"@SpotifyCares been a premium member for 5 years today it says my trial expired",subscription_cancellation,,r150,True,system error on long-term account - human review,billing account,2,test,primary,
+g151,c151,"@SpotifyCares your app is making me so mad",other_unclear,,r151,False,,frustration vague,1,test,primary,Frustration - no specific issue
+g152,c152,"@SpotifyCares everything was working perfectly before todays update now nothing works",app_bug_crash,,r152,False,,bug update,1,test,primary,Update regression
+g153,c153,"@SpotifyCares my morning commute playlist isnt available offline even though i downloaded",playback_issue,feature_question,r153,False,,playback offline,2,test,primary,
+g154,c154,"@SpotifyCares i moved and now my account is showing wrong country",subscription_cancellation,content_availability,r154,True,geographic change - account verification needed,billing region,2,test,primary,
+g155,c155,"@SpotifyCares spotify keeps asking me to upgrade even though im already premium",subscription_cancellation,app_bug_crash,r155,True,system state mismatch - verify subscription,billing bug,2,test,primary,
+g156,c156,"@SpotifyCares my friends can see what im listening to without me wanting that",feature_question,account_security,r156,False,,feature privacy,2,test,primary,Privacy-adjacent but informational
+g157,c157,"@SpotifyCares the repeat one button seems to be gone after the update",app_bug_crash,,r157,False,,bug feature removed,1,test,primary,
+g158,c158,"@SpotifyCares why does spotify drain my battery so fast",feature_question,,r158,False,,feature performance,1,test,primary,Can explain data saver
+g159,c159,"@SpotifyCares cant share songs on instagram stories anymore",app_bug_crash,feature_question,r159,False,,bug social sharing,2,test,primary,
+g160,c160,"@SpotifyCares wrapped not showing all my actual listening stats something is off",content_availability,app_bug_crash,r160,False,,content wrapped,2,test,primary,
+g161,c161,"@SpotifyCares the equalizer settings keep resetting",app_bug_crash,,r161,False,,bug settings,1,test,primary,
+g162,c162,"@SpotifyCares i lost my liked songs after logging in on a new device",login_account_access,content_availability,r162,False,,login data,2,test,primary,Data not lost - just syncing
+g163,c163,"@SpotifyCares how do i get spotify for my whole team at work",feature_question,,r163,False,,feature business,1,test,primary,Business plan question
+g164,c164,"@SpotifyCares the voice command integration with siri broke",app_bug_crash,,r164,False,,bug siri ios,1,test,primary,
+g165,c165,"@SpotifyCares my hearing aids are not pairing with spotify anymore",playback_issue,feature_question,r165,False,,playback accessibility,2,test,primary,Accessibility edge case
+g166,c166,"@SpotifyCares someone sent me spotify premium as a gift but i cant redeem it",payment_charge,,r166,False,,payment gift,1,test,primary,
+g167,c167,"@SpotifyCares i share a plan with my ex and now need to separate accounts",subscription_cancellation,,r167,True,account separation - needs human verification,billing account,2,test,primary,
+g168,c168,"@SpotifyCares my account got merged with another account somehow",account_security,login_account_access,r168,True,account integrity issue - human required,security account,2,test,primary,
+g169,c169,"@SpotifyCares my whole saved library is gone after reinstalling the app",content_availability,app_bug_crash,r169,False,,content library,2,test,primary,Reinstall wipe scenario
+g170,c170,"@SpotifyCares do you have a dark mode i cant find it",feature_question,,r170,False,,feature ui,1,test,primary,
+g171,c171,"@SpotifyCares tried to sign up and says my email is already in use",login_account_access,,r171,False,,login existing account,1,test,primary,
+g172,c172,"@SpotifyCares the app works but only in landscape mode on ipad",app_bug_crash,,r172,False,,bug ipad orientation,1,test,primary,
+g173,c173,"@SpotifyCares error code 30 what does it mean",other_unclear,,r173,True,error code without context - needs human lookup,vague error,2,test,primary,Unknown error code = escalate
+g174,c174,"@SpotifyCares does spotify support lossless audio",feature_question,,r174,False,,feature audio quality,1,test,primary,
+g175,c175,"@SpotifyCares music playing without me doing anything in the background",account_security,app_bug_crash,r175,True,could indicate unauthorized access - escalate,security bug,2,test,primary,
+g176,c176,"@SpotifyCares just got a new iphone and cant restore my data",login_account_access,,r176,False,,login new device,1,test,primary,
+g177,c177,"@SpotifyCares charged annually was told monthly what do i do",payment_charge,,r177,True,billing dispute - possible misselling,billing dispute,2,test,primary,
+g178,c178,"@SpotifyCares the lyrics feature is showing wrong lyrics for a song",app_bug_crash,content_availability,r178,False,,bug lyrics content,2,test,primary,
+g179,c179,"@SpotifyCares my spotify shows ads even though i pay for premium",subscription_cancellation,app_bug_crash,r179,True,ads on paid account = subscription or system error,billing bug,2,test,primary,
+g180,c180,"@SpotifyCares i pay for duo but my partner still sees ads",subscription_cancellation,,r180,True,plan not applied correctly - human verify,billing duo,2,test,primary,
+g181,c181,"@SpotifyCares can i change the language of the app",feature_question,,r181,False,,feature language,1,test,primary,
+g182,c182,"@SpotifyCares playlist recommendations are terrible please fix",other_unclear,,r182,False,,feedback vague,1,test,primary,Feedback not a support issue
+g183,c183,"@SpotifyCares when will [artist] music come back to spotify",content_availability,,r183,False,,content artist future,2,test,primary,Cannot confirm timeline
+g184,c184,"@SpotifyCares the play button is not working on this particular playlist only",app_bug_crash,content_availability,r184,False,,bug playlist,2,test,primary,
+g185,c185,"@SpotifyCares app works on my old phone but not new one - same account",app_bug_crash,login_account_access,r185,False,,bug device,2,test,primary,Device-specific bug
+g186,c186,"@SpotifyCares im being billed through three different payment methods how",payment_charge,,r186,True,complex billing scenario - human review,billing complex,2,test,primary,
+g187,c187,"@SpotifyCares i never signed up for spotify but you have my details",account_security,,r187,True,potential unauthorized account creation,security identity,2,test,primary,
+g188,c188,"@SpotifyCares my account shows activity from a different country",account_security,,r188,True,geographic anomaly - security escalation,security unauthorized,1,test,primary,
+g189,c189,"@SpotifyCares songs in my discover weekly are always the same never changes",content_availability,feature_question,r189,False,,content recommendations,2,test,primary,Algorithm question
+g190,c190,"@SpotifyCares want to give spotify as a gift to my mom how",feature_question,,r190,False,,feature gift,1,test,primary,
+g191,c191,"@SpotifyCares the car thing spotify car mode is gone from the update",app_bug_crash,,r191,False,,bug car mode,1,test,primary,
+g192,c192,"@SpotifyCares help me please im desperate",other_unclear,,r192,True,no context - needs human clarification,vague urgent,3,test,primary,Urgent tone but no content
+g193,c193,"@SpotifyCares you owe me a refund and if i dont get it ill report you",payment_charge,,r193,True,refund demand with threat - legal escalation,billing threat legal,1,test,primary,Payment + legal threat
+g194,c194,"@SpotifyCares i signed up through a promo that said 6 months free but was charged after 1",payment_charge,,r194,True,promo dispute - human verification needed,billing promo dispute,2,test,primary,
+g195,c195,"@SpotifyCares songs take forever to start playing like 20-30 seconds of waiting",playback_issue,,r195,False,,playback latency,1,test,primary,Loading/buffering issue
+g196,c196,"@SpotifyCares downloaded 500 songs but only 150 show offline",playback_issue,content_availability,r196,False,,playback offline count,2,test,primary,Download count mismatch
+g197,c197,"@SpotifyCares ive tried everything reinstall clear cache restart still broken",app_bug_crash,,r197,False,,bug persistent,1,test,primary,High effort user = priority
+g198,c198,"@SpotifyCares my account shows premium but i cant access premium features",subscription_cancellation,app_bug_crash,r198,True,system state mismatch - verify manually,billing bug,2,test,primary,
+g199,c199,"@SpotifyCares getting error 503 when trying to open",service_outage,app_bug_crash,r199,False,,outage error,2,test,primary,Could be outage or local
+g200,c200,"@SpotifyCares absolutely love spotify but the shuffle algorithm really needs work",other_unclear,feature_question,r200,False,,feedback feature,1,test,primary,Positive feedback + mild feature request
