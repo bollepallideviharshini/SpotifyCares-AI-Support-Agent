@@ -1,6 +1,6 @@
 # SpotifyCares AI Support Agent
 
-> **Hiver SDE Intern Take-Home Assignment**  
+> **Assignment**  
 > Brand: **SpotifyCares** | Dataset: Customer Support on Twitter (Kaggle)
 
 ---
