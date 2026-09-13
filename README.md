@@ -727,12 +727,12 @@ pytest tests/ -v --tb=short
 
 ## Submission Status
 
-- **Status:** Complete & Verified
+- **Status:** Completed
 - **Deliverables:** Working pipeline, offline evaluation harness, frozen artifacts, unit tests, decision log, and comprehensive documentation.
 
 ---
 
 ## License
 
-- **Code:** [MIT License](LICENSE)
+
 - **Dataset:** [Customer Support on Twitter](https://www.kaggle.com/datasets/thoughtvector/customer-support-on-twitter) licensed under [CC0: Public Domain](https://creativecommons.org/publicdomain/zero/1.0/).
