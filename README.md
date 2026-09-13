@@ -641,6 +641,7 @@ python src/generate_reply.py --text "@SpotifyCares my music stops playing when m
 ### Quick Demo (No API key required)
 ```bash
 make demo
+
 ```
 
 ---
